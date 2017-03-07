@@ -23,6 +23,8 @@ public class Item {
         mealMap.put(7, "Pós-Treino");
     }
 
+    @SerializedName("feedHash")
+    private String feedHash;
     @SerializedName("id")
     private long id;
     @SerializedName("profile")
@@ -38,10 +40,50 @@ public class Item {
 
     @Expose
     private SparseArray<String> mealMap = new SparseArray<>();
+    @Expose
+    private boolean liked = false;
 
     public String getMealName(){
         return this.mealMap.get(meal);
     }
 
+    public long getId() {
+        return id;
+    }
 
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public int getMeal() {
+        return meal;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public float getEnergy() {
+        return energy;
+    }
+
+    public SparseArray<String> getMealMap() {
+        return mealMap;
+    }
+
+    public boolean isLiked() {
+        return liked;
+    }
+
+    public void setLiked(boolean liked) {
+        this.liked = liked;
+    }
+
+    public String getFeedHash() {
+        return feedHash;
+    }
 }

@@ -17,6 +17,8 @@ public class BackendManager {
 
     private FeedApi feedApiImpl;
 
+    public boolean getPaginatedFeedRunning = false;
+
     private BackendManager(){
 
         final Retrofit retrofit = new Retrofit.Builder()
@@ -36,5 +38,13 @@ public class BackendManager {
 
         Call<FeedResponse> call = feedApiImpl.firstFeed();
         call.enqueue(callback);
+    }
+
+    public void getPaginatedFeed(int p, int t, Callback<FeedResponse> callback){
+        if(!getPaginatedFeedRunning) {
+            Call<FeedResponse> call = feedApiImpl.paginatedFeed(p, t);
+            call.enqueue(callback);
+            getPaginatedFeedRunning = true;
+        }
     }
 }

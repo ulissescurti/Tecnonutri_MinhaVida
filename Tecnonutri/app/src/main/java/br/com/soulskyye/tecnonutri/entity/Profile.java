@@ -17,4 +17,19 @@ public class Profile {
     @SerializedName("general_goal")
     private String goal;
 
+    public long getId() {
+        return id;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getGoal() {
+        return goal;
+    }
 }
