@@ -1,5 +1,6 @@
 package br.com.soulskyye.tecnonutri.backend;
 
+import br.com.soulskyye.tecnonutri.model.FeedItemResponse;
 import br.com.soulskyye.tecnonutri.model.FeedResponse;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,5 +47,11 @@ public class BackendManager {
             call.enqueue(callback);
             getPaginatedFeedRunning = true;
         }
+    }
+
+    public void getFeedItem(String feedHash, Callback<FeedItemResponse> callback){
+
+        Call<FeedItemResponse> call = feedApiImpl.feedItem(feedHash);
+        call.enqueue(callback);
     }
 }

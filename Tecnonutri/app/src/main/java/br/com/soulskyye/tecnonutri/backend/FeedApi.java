@@ -1,5 +1,6 @@
 package br.com.soulskyye.tecnonutri.backend;
 
+import br.com.soulskyye.tecnonutri.model.FeedItemResponse;
 import br.com.soulskyye.tecnonutri.model.FeedResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -17,4 +18,7 @@ public interface FeedApi {
 
     @GET(BackendConstants.FEED)
     Call<FeedResponse> paginatedFeed(@Query("p") int p, @Query("t") int t);
+
+    @GET(BackendConstants.FEED_ITEM)
+    Call<FeedItemResponse> feedItem(@Path("feedHash") String feedHash);
 }

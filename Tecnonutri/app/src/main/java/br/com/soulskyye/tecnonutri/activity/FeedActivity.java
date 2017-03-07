@@ -107,7 +107,7 @@ public class FeedActivity extends AppCompatActivity {
 
     private void loadItemRecyclerView(int p, int t){
 
-        feedAdapter = new FeedListAdapter(items, getApplication(), paginationFeedCallback);
+        feedAdapter = new FeedListAdapter(items, this, paginationFeedCallback);
         feedRecyclerView.setAdapter(feedAdapter);
         feedAdapter.p = p;
         feedAdapter.t = t;

@@ -73,6 +73,8 @@
                 android:id="@+id/feed_item_meal_iv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:transitionName="mealImage"
+                android:minHeight="200dp"
                 android:layout_margin="8dp"
                 android:adjustViewBounds="true"/>
 

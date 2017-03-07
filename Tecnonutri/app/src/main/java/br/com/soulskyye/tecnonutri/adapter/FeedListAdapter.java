@@ -1,6 +1,9 @@
 package br.com.soulskyye.tecnonutri.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
 import android.telecom.Call;
 import android.util.Log;
@@ -19,8 +22,11 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.soulskyye.tecnonutri.R;
+import br.com.soulskyye.tecnonutri.activity.FeedActivity;
+import br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity;
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
 import br.com.soulskyye.tecnonutri.entity.Item;
+import br.com.soulskyye.tecnonutri.util.DateUtils;
 import retrofit2.Callback;
 
 /**
@@ -69,14 +75,26 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
 
         holder.authorNameTv.setText(item.getProfile().getName());
         holder.authorGoalTv.setText(item.getProfile().getGoal());
-        holder.dayTv.setText("Refeição de "+item.getDate());
+        holder.dayTv.setText("Refeição de "+ DateUtils.getFormattedDate(item.getDate()));
         holder.kcalTv.setText(String.format("%.2f", item.getEnergy())+" kcal");
         //animate(holder);
 
         if(holder.getAdapterPosition() == listItems.size()-1){
             BackendManager.getInstance().getPaginatedFeed(p, t, paginationCallback);
         }
+        holder.mealPhotoIv.setTag(item);
+        holder.mealPhotoIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Item item = (Item) v.getTag();
+                Intent intent = new Intent(context, FeedDetailsActivity.class);
+                intent.putExtra(FeedDetailsActivity.FEED_HASH, item.getFeedHash());
+//                ActivityOptionsCompat options = ActivityOptionsCompat.
+//                        makeSceneTransitionAnimation((FeedActivity)context, (ImageView)v, "mealImage");
+                context.startActivity(intent);
 
+            }
+        });
 
         holder.heartCb.setChecked(item.isLiked());
         holder.heartCb.setTag(item);

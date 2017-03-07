@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity"
+    tools:showIn="@layout/activity_feed_details">
+
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_feed_details"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/feed_item_detail_first_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="12dp"
+                android:elevation="2dp"
+                android:background="@color/primary_light">
+
+                <ImageView
+                    android:id="@+id/feed_item_detail_author_iv"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginRight="12dp"
+                    android:layout_marginEnd="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/feed_item_detail_author_name_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/secondary_text"
+                        android:ellipsize="end"
+                        android:maxLines="3"/>
+
+                    <TextView
+                        android:id="@+id/feed_item_detail_goal_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:layout_weight="1"
+                        android:textSize="18sp"
+                        android:textColor="@color/secondary_text"
+                        android:ellipsize="end" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/feed_item_detail_first_layout">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <RelativeLayout
+                        android:id="@+id/feed_item_detail_second_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/feed_item_detail_meal_iv"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minHeight="200dp"
+                            android:transitionName="mealImage"
+                            android:adjustViewBounds="true"/>
+
+                    </RelativeLayout>
+
+                    <CheckBox
+                        android:id="@+id/feed_item_detail_meal_heart_cb"
+                        android:layout_width="88dp"
+                        android:layout_height="88dp"
+                        android:layout_gravity="end|bottom"
+                        android:button="@drawable/checkbox_heart"
+                        android:layout_marginTop="-120dp"
+                        android:layout_marginEnd="32dp"
+                        android:layout_marginRight="32dp"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true"
+                        android:layout_below="@id/feed_item_detail_second_layout"/>
+
+                    <LinearLayout
+                        android:id="@+id/feed_item_detail_food_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/feed_item_detail_second_layout"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+                </RelativeLayout>
+
+            </android.support.v4.widget.NestedScrollView>
+        </RelativeLayout>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+</LinearLayout>

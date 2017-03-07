@@ -5,6 +5,8 @@ import android.util.SparseArray;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by ulissescurti on 3/6/17.
  */
@@ -37,6 +39,14 @@ public class Item {
     private String image;
     @SerializedName("energy")
     private float energy;
+    @SerializedName("carbohydrate")
+    private String carbohydrate;
+    @SerializedName("fat")
+    private String fat;
+    @SerializedName("protein")
+    private String protein;
+    @SerializedName("foods")
+    private ArrayList<Food> foods;
 
     @Expose
     private SparseArray<String> mealMap = new SparseArray<>();
@@ -85,5 +95,21 @@ public class Item {
 
     public String getFeedHash() {
         return feedHash;
+    }
+
+    public String getCarbohydrate() {
+        return carbohydrate;
+    }
+
+    public String getFat() {
+        return fat;
+    }
+
+    public String getProtein() {
+        return protein;
+    }
+
+    public ArrayList<Food> getFoods() {
+        return foods;
     }
 }
