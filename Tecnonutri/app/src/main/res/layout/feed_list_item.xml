@@ -19,7 +19,7 @@
             android:id="@+id/feed_item_first_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/primary_light">
+            android:background="@drawable/click_effect">
             
             <ImageView
                 android:id="@+id/feed_item_author_iv"

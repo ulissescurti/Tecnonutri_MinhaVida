@@ -26,6 +26,10 @@
             android:name="br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name="br.com.soulskyye.tecnonutri.activity.ProfileDetailsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

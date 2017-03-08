@@ -40,11 +40,11 @@ public class Item {
     @SerializedName("energy")
     private float energy;
     @SerializedName("carbohydrate")
-    private String carbohydrate;
+    private float carbohydrate;
     @SerializedName("fat")
-    private String fat;
+    private float fat;
     @SerializedName("protein")
-    private String protein;
+    private float protein;
     @SerializedName("foods")
     private ArrayList<Food> foods;
 
@@ -97,15 +97,15 @@ public class Item {
         return feedHash;
     }
 
-    public String getCarbohydrate() {
+    public float getCarbohydrate() {
         return carbohydrate;
     }
 
-    public String getFat() {
+    public float getFat() {
         return fat;
     }
 
-    public String getProtein() {
+    public float getProtein() {
         return protein;
     }
 

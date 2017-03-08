@@ -1,5 +1,6 @@
 package br.com.soulskyye.tecnonutri.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Parcelable;
@@ -22,35 +23,38 @@ import br.com.soulskyye.tecnonutri.adapter.FeedListAdapter;
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
 import br.com.soulskyye.tecnonutri.entity.Item;
 import br.com.soulskyye.tecnonutri.model.FeedResponse;
+import br.com.soulskyye.tecnonutri.util.Utils;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FeedActivity extends AppCompatActivity {
+public class FeedActivity extends BaseActivity {
 
     private ArrayList<Item> items;
     private RecyclerView feedRecyclerView;
     private FeedListAdapter feedAdapter;
     private SwipeRefreshLayout swipeRefreshFeeds;
+    private Context context;
 
     Callback paginationFeedCallback = new Callback<FeedResponse>() {
         @Override
         public void onResponse(Call<FeedResponse> call, Response<FeedResponse> response) {
             // handle success HTTP request
             Log.i("paginatedFeed", call.request().toString());
+
             items.addAll(response.body().getItems());
             feedAdapter.insertItems(response.body().getItems().size());
 
             loadItemRecyclerView(response.body().getP(), response.body().getT());
-
-            BackendManager.getInstance().getPaginatedFeedRunning = false;
+            Utils.hideProgressDialog();
         }
 
         @Override
         public void onFailure(Call<FeedResponse> call, Throwable t) {
             // handle failure HTTP request
             Log.i("paginatedFeed", "Failure");
-            BackendManager.getInstance().getPaginatedFeedRunning = false;
+            Utils.hideProgressDialog();
+            Utils.showErrorPopup(context, t);
         }
     };
 
@@ -60,6 +64,8 @@ public class FeedActivity extends AppCompatActivity {
         setContentView(R.layout.activity_feed);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        context = this;
 
         initiateViews();
         loadFirstFeed(false);
@@ -73,7 +79,7 @@ public class FeedActivity extends AppCompatActivity {
         feedRecyclerView.setLayoutManager(llm);
 
         swipeRefreshFeeds = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_feeds);
-        swipeRefreshFeeds.setColorSchemeResources(R.color.colorAccent , R.color.colorPrimary);
+        swipeRefreshFeeds.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshFeeds.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -83,7 +89,9 @@ public class FeedActivity extends AppCompatActivity {
     }
 
     private void loadFirstFeed(final boolean isFromRefresh){
-
+        if(!isFromRefresh) {
+            Utils.showProgressDialog(this);
+        }
         BackendManager.getInstance().getFirstFeed(new Callback<FeedResponse>() {
             @Override
             public void onResponse(Call<FeedResponse> call, Response<FeedResponse> response) {
@@ -91,16 +99,20 @@ public class FeedActivity extends AppCompatActivity {
                 Log.i("firstFeed", "Success");
 
                 items = new ArrayList<>(response.body().getItems());
-                loadItemRecyclerView(response.body().getP(), response.body().getT());
                 if (isFromRefresh){
                     swipeRefreshFeeds.setRefreshing(false);
                 }
+                loadItemRecyclerView(response.body().getP(), response.body().getT());
+                Utils.hideProgressDialog();
             }
 
             @Override
             public void onFailure(Call<FeedResponse> call, Throwable t) {
                 // handle failure HTTP request
                 Log.i("firstFeed", "Failure");
+                Utils.hideProgressDialog();
+                swipeRefreshFeeds.setRefreshing(false);
+                Utils.showErrorPopup(context, t);
             }
         });
     }

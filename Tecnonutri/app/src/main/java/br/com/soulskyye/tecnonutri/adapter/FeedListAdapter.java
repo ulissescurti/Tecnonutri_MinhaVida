@@ -2,31 +2,26 @@ package br.com.soulskyye.tecnonutri.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
 import android.support.v7.widget.RecyclerView;
-import android.telecom.Call;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 import br.com.soulskyye.tecnonutri.R;
-import br.com.soulskyye.tecnonutri.activity.FeedActivity;
 import br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity;
+import br.com.soulskyye.tecnonutri.activity.ProfileDetailsActivity;
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
 import br.com.soulskyye.tecnonutri.entity.Item;
-import br.com.soulskyye.tecnonutri.util.DateUtils;
+import br.com.soulskyye.tecnonutri.entity.Profile;
+import br.com.soulskyye.tecnonutri.util.Utils;
 import retrofit2.Callback;
 
 /**
@@ -65,21 +60,22 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
         Picasso.with(context)
                 .load(item.getProfile().getPhoto())
                 .placeholder(R.drawable.person_placeholder)
-                .error(R.drawable.person_placeholder)
+                .error(R.drawable.ic_image_not_found)
                 .into(holder.authorPhotoIv);
         Picasso.with(context)
                 .load(item.getImage())
                 .placeholder(R.drawable.meal_placeholder)
-                .error(R.drawable.no_image_found)
+                .error(R.drawable.ic_image_not_found)
                 .into(holder.mealPhotoIv);
 
         holder.authorNameTv.setText(item.getProfile().getName());
         holder.authorGoalTv.setText(item.getProfile().getGoal());
-        holder.dayTv.setText("Refeição de "+ DateUtils.getFormattedDate(item.getDate()));
+        holder.dayTv.setText("Refeição de "+ Utils.getFormattedDate(item.getDate()));
         holder.kcalTv.setText(String.format("%.2f", item.getEnergy())+" kcal");
         //animate(holder);
 
         if(holder.getAdapterPosition() == listItems.size()-1){
+            Utils.showProgressDialog(context);
             BackendManager.getInstance().getPaginatedFeed(p, t, paginationCallback);
         }
         holder.mealPhotoIv.setTag(item);
@@ -92,7 +88,17 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
 //                ActivityOptionsCompat options = ActivityOptionsCompat.
 //                        makeSceneTransitionAnimation((FeedActivity)context, (ImageView)v, "mealImage");
                 context.startActivity(intent);
+            }
+        });
 
+        holder.profileLayout.setTag(item.getProfile());
+        holder.profileLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Profile profile = (Profile) v.getTag();
+                Intent intent = new Intent(context, ProfileDetailsActivity.class);
+                intent.putExtra(ProfileDetailsActivity.PROFILE_ID, profile.getId());
+                context.startActivity(intent);
             }
         });
 
@@ -132,6 +138,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
 
     public class FeedViewHolder extends RecyclerView.ViewHolder {
 
+        LinearLayout profileLayout;
         ImageView authorPhotoIv;
         TextView authorNameTv;
         TextView authorGoalTv;
@@ -144,6 +151,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
 
         FeedViewHolder(View itemView) {
             super(itemView);
+            profileLayout = (LinearLayout) itemView.findViewById(R.id.feed_item_first_layout);
             authorPhotoIv = (ImageView) itemView.findViewById(R.id.feed_item_author_iv);
             authorNameTv = (TextView) itemView.findViewById(R.id.feed_item_author_name_tv);
             authorGoalTv = (TextView) itemView.findViewById(R.id.feed_item_goal_tv);

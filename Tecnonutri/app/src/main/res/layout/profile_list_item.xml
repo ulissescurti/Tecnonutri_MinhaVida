@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/feed_item_card_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="12dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginRight="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="12dp"
+    android:orientation="horizontal">
+    <ImageView
+        android:id="@+id/profile_item_meal1_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="mealImage"
+        android:layout_marginRight="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/profile_item_meal2_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="mealImage"
+        android:layout_marginLeft="6dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginEnd="6dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"/>
+    <ImageView
+        android:id="@+id/profile_item_meal3_iv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:transitionName="mealImage"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+        android:layout_gravity="center"/>
+</LinearLayout>
