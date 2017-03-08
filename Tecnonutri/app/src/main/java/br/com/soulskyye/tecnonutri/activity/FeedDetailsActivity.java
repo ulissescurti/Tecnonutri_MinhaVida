@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubInterstitial;
 import com.squareup.picasso.Picasso;
 
 import br.com.soulskyye.tecnonutri.R;
@@ -25,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FeedDetailsActivity extends BaseActivity {
+public class FeedDetailsActivity extends BaseActivity implements MoPubInterstitial.InterstitialAdListener {
 
     private Context context;
 
@@ -42,6 +44,8 @@ public class FeedDetailsActivity extends BaseActivity {
 
     private LinearLayout itemsList;
 
+    private MoPubInterstitial mInterstitial;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +54,10 @@ public class FeedDetailsActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         context = this;
+
+        mInterstitial = new MoPubInterstitial(FeedDetailsActivity.this, SMALL_BANNER_ID);
+        mInterstitial.setInterstitialAdListener(this);
+        mInterstitial.load();
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -184,4 +192,44 @@ public class FeedDetailsActivity extends BaseActivity {
         itemsList.addView(foodItemTotal);
     }
 
+    @Override
+    protected void onDestroy() {
+        mInterstitial.destroy();
+        super.onDestroy();
+    }
+
+    // Defined by your application, indicating that you're ready to show an interstitial ad.
+    void yourAppsShowInterstitialMethod() {
+        if (mInterstitial.isReady()) {
+            mInterstitial.show();
+        } else {
+            // Caching is likely already in progress if `isReady()` is false.
+            // Avoid calling `load()` here and instead rely on the callbacks as suggested below.
+        }
+    }
+
+    @Override
+    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
+        yourAppsShowInterstitialMethod();
+    }
+
+    @Override
+    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
+
+    }
+
+    @Override
+    public void onInterstitialShown(MoPubInterstitial interstitial) {
+
+    }
+
+    @Override
+    public void onInterstitialClicked(MoPubInterstitial interstitial) {
+
+    }
+
+    @Override
+    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
+
+    }
 }

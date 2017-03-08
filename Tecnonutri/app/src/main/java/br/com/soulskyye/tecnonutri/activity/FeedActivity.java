@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mopub.mobileads.MoPubErrorCode;
+import com.mopub.mobileads.MoPubView;
+
 import java.util.ArrayList;
 
 import br.com.soulskyye.tecnonutri.R;
@@ -28,13 +31,15 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FeedActivity extends BaseActivity {
+public class FeedActivity extends BaseActivity implements MoPubView.BannerAdListener {
 
     private ArrayList<Item> items;
     private RecyclerView feedRecyclerView;
     private FeedListAdapter feedAdapter;
     private SwipeRefreshLayout swipeRefreshFeeds;
     private Context context;
+
+    private MoPubView moPubView;
 
     Callback paginationFeedCallback = new Callback<FeedResponse>() {
         @Override
@@ -66,6 +71,11 @@ public class FeedActivity extends BaseActivity {
         setSupportActionBar(toolbar);
 
         context = this;
+
+        moPubView = (MoPubView) findViewById(R.id.adview);
+        moPubView.setAdUnitId(SMALL_BANNER_ID);
+        moPubView.setBannerAdListener(this);
+        moPubView.loadAd();
 
         initiateViews();
         loadFirstFeed(false);
@@ -125,4 +135,34 @@ public class FeedActivity extends BaseActivity {
         feedAdapter.t = t;
     }
 
+    @Override
+    public void onDestroy() {
+        moPubView.destroy();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBannerLoaded(MoPubView banner) {
+        
+    }
+
+    @Override
+    public void onBannerFailed(MoPubView banner, MoPubErrorCode errorCode) {
+
+    }
+
+    @Override
+    public void onBannerClicked(MoPubView banner) {
+
+    }
+
+    @Override
+    public void onBannerExpanded(MoPubView banner) {
+
+    }
+
+    @Override
+    public void onBannerCollapsed(MoPubView banner) {
+
+    }
 }
