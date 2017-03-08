@@ -1,4 +1,13 @@
 <resources>
-    <string name="app_name">Tecnonutri</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">TecnoNutri</string>
+    <string name="fat">Fat</string>
+    <string name="prot">Prot</string>
+    <string name="carb">Carb</string>
+    <string name="cal">Cal</string>
+    <string name="understood">Understood</string>
+    <string name="general_error_message">Something unexpected happened, we apologize. Please, contact us if this error persists.</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="meal_of">Meal of </string>
+    <string name="total_consumed">Total Consumed</string>
+
 </resources>

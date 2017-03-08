@@ -66,7 +66,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="Cal"
+                    android:text="@string/cal"
                     android:textColor="@color/secondary_text"
                     android:ellipsize="end" />
 
@@ -97,7 +97,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="Carb"
+                    android:text="@string/carb"
                     android:textColor="@color/secondary_text"
                     android:ellipsize="end" />
 
@@ -128,7 +128,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="Prot"
+                    android:text="@string/prot"
                     android:textColor="@color/secondary_text"
                     android:ellipsize="end" />
 
@@ -159,7 +159,7 @@
                     android:layout_marginEnd="4dp"
                     android:layout_weight="1"
                     android:textSize="16sp"
-                    android:text="Gord"
+                    android:text="@string/fat"
                     android:textColor="@color/secondary_text"
                     android:ellipsize="end" />
 

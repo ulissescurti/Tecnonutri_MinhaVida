@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import br.com.soulskyye.tecnonutri.R;
 import retrofit2.Call;
 
 /**
@@ -22,7 +23,7 @@ public class Utils {
 
     public static void showProgressDialog(Context context){
         progressDialog = new ProgressDialog(context);
-        progressDialog.setMessage("Carregando...");
+        progressDialog.setMessage(context.getString(R.string.loading));
         progressDialog.setIndeterminate(false);
         progressDialog.setCancelable(false);
         progressDialog.show();
@@ -35,11 +36,11 @@ public class Utils {
     public static void showErrorPopup(Context context, Throwable t){
 
         AlertDialog.Builder builder1 = new AlertDialog.Builder(context);
-        builder1.setMessage("Ocorreu algum erro, nos desculpe. Se o erro persistir entre em contato conosco.");
+        builder1.setMessage(R.string.general_error_message);
         builder1.setCancelable(true);
 
         builder1.setPositiveButton(
-                "Entendido",
+                R.string.understood,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();

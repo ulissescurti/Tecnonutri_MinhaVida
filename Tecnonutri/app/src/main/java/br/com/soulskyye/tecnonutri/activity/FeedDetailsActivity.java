@@ -97,7 +97,7 @@ public class FeedDetailsActivity extends BaseActivity {
 
         itemsList.removeAllViews();
 
-        setTitle("Refeição de "+ Utils.getFormattedDate(item.getDate()));
+        setTitle(getString(R.string.meal_of)+Utils.getFormattedDate(item.getDate()));
 
         swipeRefreshFeeds.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshFeeds.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -175,7 +175,7 @@ public class FeedDetailsActivity extends BaseActivity {
         TextView fatTv = (TextView)foodItemTotal.findViewById(R.id.food_item_fat);
         TextView fat2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_fat2);
 
-        foodTotalTv.setText("Total Consumido");
+        foodTotalTv.setText(R.string.total_consumed);
         cal2Tv.setText(item.getEnergy()+"cal");
         carb2Tv.setText(item.getCarbohydrate()+"g");
         prot2Tv.setText(item.getProtein()+"g");
