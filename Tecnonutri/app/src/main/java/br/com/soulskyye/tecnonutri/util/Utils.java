@@ -5,6 +5,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import java.util.Locale;
+
 import br.com.soulskyye.tecnonutri.R;
 import retrofit2.Call;
 
@@ -49,6 +51,16 @@ public class Utils {
 
         AlertDialog alert11 = builder1.create();
         alert11.show();
+    }
+
+    public static String getFormattedNumber(float value){
+        String formattedNumber = String.format("%.2f", value);;
+
+        if(Locale.getDefault().equals(new Locale("pt", "BR"))){
+            return formattedNumber.replace(".", ",");
+        } else{
+            return formattedNumber.replace(",", ".");
+        }
     }
 
 }

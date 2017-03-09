@@ -118,22 +118,18 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
 
                 TextView foodNameTv = (TextView)foodItem.findViewById(R.id.food_name);
                 TextView foodAmountTv = (TextView)foodItem.findViewById(R.id.food_amount);
-                TextView calTv = (TextView)foodItem.findViewById(R.id.food_item_cal);
                 TextView cal2Tv = (TextView)foodItem.findViewById(R.id.food_item_cal2);
-                TextView carbTv = (TextView)foodItem.findViewById(R.id.food_item_carb);
                 TextView carb2Tv = (TextView)foodItem.findViewById(R.id.food_item_carb2);
-                TextView protTv = (TextView)foodItem.findViewById(R.id.food_item_prot);
                 TextView prot2Tv = (TextView)foodItem.findViewById(R.id.food_item_prot2);
-                TextView fatTv = (TextView)foodItem.findViewById(R.id.food_item_fat);
                 TextView fat2Tv = (TextView)foodItem.findViewById(R.id.food_item_fat2);
 
                 foodNameTv.setText(food.getDescription());
-                foodAmountTv.setText(food.getAmount()+" ("+food.getMeasure()+")");
+                foodAmountTv.setText(Utils.getFormattedNumber(food.getAmount())+" ("+food.getMeasure()+")");
 
-                cal2Tv.setText(food.getEnergy()+"cal");
-                carb2Tv.setText(food.getCarbohydrate()+"g");
-                prot2Tv.setText(food.getProtein()+"g");
-                fat2Tv.setText(food.getFat()+"g");
+                cal2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(food.getEnergy()), getString(R.string.kcal)));
+                carb2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(food.getCarbohydrate()), getString(R.string.g)));
+                prot2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(food.getProtein()), getString(R.string.g)));
+                fat2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(food.getFat()), getString(R.string.g)));
 
                 itemsList.addView(foodItem);
             }
@@ -149,10 +145,10 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         TextView fat2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_fat2);
 
         foodTotalTv.setText(R.string.total_consumed);
-        cal2Tv.setText(item.getEnergy()+"cal");
-        carb2Tv.setText(item.getCarbohydrate()+"g");
-        prot2Tv.setText(item.getProtein()+"g");
-        fat2Tv.setText(item.getFat()+"g");
+        cal2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(item.getEnergy()), getString(R.string.kcal)));
+        carb2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(item.getCarbohydrate()), getString(R.string.g)));
+        prot2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(item.getProtein()), getString(R.string.g)));
+        fat2Tv.setText(getString(R.string.measure_text, Utils.getFormattedNumber(item.getFat()), getString(R.string.g)));
 
         itemsList.addView(foodItemTotal);
     }

@@ -71,7 +71,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
         holder.authorNameTv.setText(item.getProfile().getName());
         holder.authorGoalTv.setText(item.getProfile().getGoal());
         holder.dayTv.setText(context.getString(R.string.meal_of)+ Utils.getFormattedDate(item.getDate()));
-        holder.kcalTv.setText(String.format("%.2f", item.getEnergy())+" kcal");
+        holder.kcalTv.setText(Utils.getFormattedNumber(item.getEnergy())+" kcal");
         //animate(holder);
 
         if(holder.getAdapterPosition() == listItems.size()-1){

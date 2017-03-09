@@ -12,7 +12,7 @@ public class Food {
     @SerializedName("description")
     private String description;
     @SerializedName("amount")
-    private String amount;
+    private float amount;
     @SerializedName("measure")
     private String measure;
     @SerializedName("weight")
@@ -34,7 +34,7 @@ public class Food {
         return description;
     }
 
-    public String getAmount() {
+    public float getAmount() {
         return amount;
     }
 
