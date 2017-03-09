@@ -1,10 +1,9 @@
-package br.com.soulskyye.tecnonutri.activity;
+package br.com.soulskyye.tecnonutri.view.ui;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,39 +11,24 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.mopub.mobileads.MoPubErrorCode;
-import com.mopub.mobileads.MoPubInterstitial;
 import com.squareup.picasso.Picasso;
 
 import br.com.soulskyye.tecnonutri.R;
-import br.com.soulskyye.tecnonutri.backend.BackendManager;
-import br.com.soulskyye.tecnonutri.entity.Food;
-import br.com.soulskyye.tecnonutri.entity.Item;
-import br.com.soulskyye.tecnonutri.entity.Profile;
-import br.com.soulskyye.tecnonutri.model.FeedItemResponse;
+import br.com.soulskyye.tecnonutri.model.Food;
+import br.com.soulskyye.tecnonutri.model.Item;
+import br.com.soulskyye.tecnonutri.model.Profile;
+import br.com.soulskyye.tecnonutri.presenter.FeedDetailsPresenter;
 import br.com.soulskyye.tecnonutri.util.Utils;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import br.com.soulskyye.tecnonutri.view.FeedDetailsView;
 
-public class FeedDetailsActivity extends BaseActivity implements MoPubInterstitial.InterstitialAdListener {
+public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView {
+
+    public static final String FEED_HASH = "feedhash";
+    private FeedDetailsPresenter mFeedDetailsPresenter;
 
     private Context context;
 
     private SwipeRefreshLayout swipeRefreshFeeds;
-    public static final String FEED_HASH = "feedhash";
-    private String feedHash;
-    private Item item;
-
-    private LinearLayout profileLayout;
-    private ImageView authorPhotoIv;
-    private TextView authorNameTv;
-    private TextView authorGoalTv;
-    private ImageView mealPhotoIv;
-
-    private LinearLayout itemsList;
-
-    private MoPubInterstitial mInterstitial;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,65 +39,50 @@ public class FeedDetailsActivity extends BaseActivity implements MoPubInterstiti
 
         context = this;
 
-        mInterstitial = new MoPubInterstitial(FeedDetailsActivity.this, SMALL_BANNER_ID);
-        mInterstitial.setInterstitialAdListener(this);
-        mInterstitial.load();
+        mFeedDetailsPresenter = new FeedDetailsPresenter(context);
+        mFeedDetailsPresenter.attachView(this);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            feedHash = extras.getString(FEED_HASH);
+            mFeedDetailsPresenter.setFeedHash(extras.getString(FEED_HASH));
         }
 
-        loadFeedDetails(false);
+        showInterstitialAd();
+        setUpSwipeToRefresh();
+
+        mFeedDetailsPresenter.loadFeedDetails(false);
     }
 
-    private void loadFeedDetails(final boolean isFromRefresh){
-        if(!isFromRefresh) {
-            Utils.showProgressDialog(this);
-        }
-        BackendManager.getInstance().getFeedItem(feedHash, new Callback<FeedItemResponse>() {
-            @Override
-            public void onResponse(Call<FeedItemResponse> call, Response<FeedItemResponse> response) {
-                item = response.body().getItem();
-                loadViews(isFromRefresh);
-                Utils.hideProgressDialog();
-            }
-
-            @Override
-            public void onFailure(Call<FeedItemResponse> call, Throwable t) {
-//                loadViews(isFromRefresh);
-                Utils.hideProgressDialog();
-                swipeRefreshFeeds.setRefreshing(false);
-                Utils.showErrorPopup(context, t);
-            }
-        });
-    }
-
-    private void loadViews(final boolean isFromRefresh){
-
-        if(isFromRefresh){
-            swipeRefreshFeeds.setRefreshing(false);
-        }
-
+    private void setUpSwipeToRefresh(){
         swipeRefreshFeeds = (SwipeRefreshLayout)findViewById(R.id.swipe_refresh_feed_details);
-        profileLayout = (LinearLayout) findViewById(R.id.feed_item_detail_first_layout);
-        authorPhotoIv = (ImageView) findViewById(R.id.feed_item_detail_author_iv);
-        authorNameTv = (TextView) findViewById(R.id.feed_item_detail_author_name_tv);
-        authorGoalTv = (TextView) findViewById(R.id.feed_item_detail_goal_tv);
-        mealPhotoIv = (ImageView) findViewById(R.id.feed_item_detail_meal_iv);
-        itemsList = (LinearLayout) findViewById(R.id.feed_item_detail_food_list);
-
-        itemsList.removeAllViews();
-
-        setTitle(getString(R.string.meal_of)+Utils.getFormattedDate(item.getDate()));
-
         swipeRefreshFeeds.setColorSchemeResources(R.color.colorAccent);
         swipeRefreshFeeds.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                loadFeedDetails(true);
+                mFeedDetailsPresenter.loadFeedDetails(true);
             }
         });
+    }
+
+    @Override
+    public void loadViews(final boolean isFromRefresh){
+
+        final Item item = mFeedDetailsPresenter.getItem();
+
+        LinearLayout profileLayout = (LinearLayout) findViewById(R.id.feed_item_detail_first_layout);
+        ImageView authorPhotoIv = (ImageView) findViewById(R.id.feed_item_detail_author_iv);
+        TextView authorNameTv = (TextView) findViewById(R.id.feed_item_detail_author_name_tv);
+        TextView authorGoalTv = (TextView) findViewById(R.id.feed_item_detail_goal_tv);
+        ImageView mealPhotoIv = (ImageView) findViewById(R.id.feed_item_detail_meal_iv);
+        LinearLayout itemsList = (LinearLayout) findViewById(R.id.feed_item_detail_food_list);
+
+        if(isFromRefresh){
+            hideRefreshDialog();
+        }
+
+        itemsList.removeAllViews();
+
+        setTitle(getString(R.string.meal_of)+Utils.getFormattedDate(item.getDate()));
 
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,13 +143,9 @@ public class FeedDetailsActivity extends BaseActivity implements MoPubInterstiti
         foodItemTotal = (LinearLayout) inflater.inflate(R.layout.food_item_total, null);
 
         TextView foodTotalTv = (TextView)foodItemTotal.findViewById(R.id.total_text_view);
-        TextView calTv = (TextView)foodItemTotal.findViewById(R.id.food_item_cal);
         TextView cal2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_cal2);
-        TextView carbTv = (TextView)foodItemTotal.findViewById(R.id.food_item_carb);
         TextView carb2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_carb2);
-        TextView protTv = (TextView)foodItemTotal.findViewById(R.id.food_item_prot);
         TextView prot2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_prot2);
-        TextView fatTv = (TextView)foodItemTotal.findViewById(R.id.food_item_fat);
         TextView fat2Tv = (TextView)foodItemTotal.findViewById(R.id.food_item_fat2);
 
         foodTotalTv.setText(R.string.total_consumed);
@@ -193,43 +158,26 @@ public class FeedDetailsActivity extends BaseActivity implements MoPubInterstiti
     }
 
     @Override
-    protected void onDestroy() {
-        mInterstitial.destroy();
-        super.onDestroy();
-    }
-
-    // Defined by your application, indicating that you're ready to show an interstitial ad.
-    void yourAppsShowInterstitialMethod() {
-        if (mInterstitial.isReady()) {
-            mInterstitial.show();
-        } else {
-            // Caching is likely already in progress if `isReady()` is false.
-            // Avoid calling `load()` here and instead rely on the callbacks as suggested below.
+    public void hideRefreshDialog() {
+        if(swipeRefreshFeeds != null) {
+            swipeRefreshFeeds.setRefreshing(false);
         }
     }
 
     @Override
-    public void onInterstitialLoaded(MoPubInterstitial interstitial) {
-        yourAppsShowInterstitialMethod();
+    public void hideProgressDialog() {
+        Utils.hideProgressDialog();
     }
 
     @Override
-    public void onInterstitialFailed(MoPubInterstitial interstitial, MoPubErrorCode errorCode) {
-
+    public void showProgressDialog() {
+        Utils.showProgressDialog(context);
     }
 
     @Override
-    public void onInterstitialShown(MoPubInterstitial interstitial) {
-
-    }
-
-    @Override
-    public void onInterstitialClicked(MoPubInterstitial interstitial) {
-
-    }
-
-    @Override
-    public void onInterstitialDismissed(MoPubInterstitial interstitial) {
-
+    public void failureLoadFeedDetails(Throwable t) {
+        Utils.hideProgressDialog();
+        hideRefreshDialog();
+        Utils.showErrorPopup(context, t);
     }
 }

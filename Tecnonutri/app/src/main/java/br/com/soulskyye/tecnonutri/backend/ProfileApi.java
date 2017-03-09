@@ -1,8 +1,6 @@
 package br.com.soulskyye.tecnonutri.backend;
 
-import br.com.soulskyye.tecnonutri.model.FeedItemResponse;
-import br.com.soulskyye.tecnonutri.model.FeedResponse;
-import br.com.soulskyye.tecnonutri.model.ProfileResponse;
+import br.com.soulskyye.tecnonutri.backend.networkmodel.ProfileResponse;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;

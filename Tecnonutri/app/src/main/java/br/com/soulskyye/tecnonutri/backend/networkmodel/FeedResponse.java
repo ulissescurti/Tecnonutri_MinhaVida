@@ -1,17 +1,16 @@
-package br.com.soulskyye.tecnonutri.model;
+package br.com.soulskyye.tecnonutri.backend.networkmodel;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
-import br.com.soulskyye.tecnonutri.entity.Item;
-import br.com.soulskyye.tecnonutri.entity.Profile;
+import br.com.soulskyye.tecnonutri.model.Item;
 
 /**
  * Created by ulissescurti on 3/6/17.
  */
 
-public class ProfileResponse {
+public class FeedResponse {
 
     @SerializedName("success")
     private boolean success;
@@ -19,8 +18,6 @@ public class ProfileResponse {
     private int t;
     @SerializedName("p")
     private int p;
-    @SerializedName("profile")
-    private Profile profile;
     @SerializedName("items")
     private ArrayList<Item> items;
 
@@ -36,15 +33,7 @@ public class ProfileResponse {
         return p;
     }
 
-    public Profile getProfile() {
-        return profile;
-    }
-
     public ArrayList<Item> getItems() {
         return items;
-    }
-
-    public void setItems(ArrayList<Item> items) {
-        this.items = items;
     }
 }

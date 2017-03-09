@@ -1,13 +1,12 @@
 package br.com.soulskyye.tecnonutri.backend;
 
-import br.com.soulskyye.tecnonutri.model.FeedItemResponse;
-import br.com.soulskyye.tecnonutri.model.FeedResponse;
-import br.com.soulskyye.tecnonutri.model.ProfileResponse;
+import br.com.soulskyye.tecnonutri.backend.networkmodel.FeedItemResponse;
+import br.com.soulskyye.tecnonutri.backend.networkmodel.FeedResponse;
+import br.com.soulskyye.tecnonutri.backend.networkmodel.ProfileResponse;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 

@@ -1,4 +1,4 @@
-package br.com.soulskyye.tecnonutri.adapter;
+package br.com.soulskyye.tecnonutri.presenter.adapter;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,9 +13,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import br.com.soulskyye.tecnonutri.R;
-import br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity;
+import br.com.soulskyye.tecnonutri.view.ui.FeedDetailsActivity;
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
-import br.com.soulskyye.tecnonutri.entity.Item;
+import br.com.soulskyye.tecnonutri.model.Item;
 import br.com.soulskyye.tecnonutri.util.Utils;
 import retrofit2.Callback;
 

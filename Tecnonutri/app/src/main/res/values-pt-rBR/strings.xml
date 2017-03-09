@@ -8,7 +8,7 @@
     <string name="understood">Entendido</string>
     <string name="general_error_message">Algo inesperado aconteçeu, pedimos desculpas. Se esse erro persistir, por favor entre em contato conosco.</string>
     <string name="loading">Carregando&#8230;</string>
-    <string name="meal_of">Refeição de </string>
+    <string name="meal_of">Refeição de&#032;</string>
     <string name="total_consumed">Total Consumido</string>
 
 </resources>

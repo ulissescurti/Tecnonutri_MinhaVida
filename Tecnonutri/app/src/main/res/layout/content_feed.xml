@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.soulskyye.tecnonutri.activity.FeedActivity"
+    tools:context="br.com.soulskyye.tecnonutri.view.ui.FeedActivity"
     tools:showIn="@layout/activity_feed">
 
 
@@ -13,7 +13,7 @@
         android:id="@+id/swipe_refresh_feeds"
         android:layout_above="@+id/adview"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view_feed"

@@ -7,7 +7,7 @@
     <string name="understood">Understood</string>
     <string name="general_error_message">Something unexpected happened, we apologize. Please, contact us if this error persists.</string>
     <string name="loading">Loading&#8230;</string>
-    <string name="meal_of">Meal of </string>
+    <string name="meal_of">Meal of&#032;</string>
     <string name="total_consumed">Total Consumed</string>
 
 </resources>

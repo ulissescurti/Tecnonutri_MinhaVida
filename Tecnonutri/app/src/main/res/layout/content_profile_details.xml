@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="br.com.soulskyye.tecnonutri.activity.ProfileDetailsActivity"
+    tools:context="br.com.soulskyye.tecnonutri.view.ui.ProfileDetailsActivity"
     tools:showIn="@layout/activity_profile_details">
 
 

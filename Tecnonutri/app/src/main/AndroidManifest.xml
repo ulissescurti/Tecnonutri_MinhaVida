@@ -17,7 +17,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="br.com.soulskyye.tecnonutri.activity.FeedActivity"
+            android:name="br.com.soulskyye.tecnonutri.view.ui.FeedActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -27,11 +27,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="br.com.soulskyye.tecnonutri.activity.FeedDetailsActivity"
+            android:name="br.com.soulskyye.tecnonutri.view.ui.FeedDetailsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name="br.com.soulskyye.tecnonutri.activity.ProfileDetailsActivity"
+            android:name="br.com.soulskyye.tecnonutri.view.ui.ProfileDetailsActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name="com.mopub.mobileads.MoPubActivity" android:configChanges="keyboardHidden|orientation|screenSize"/>

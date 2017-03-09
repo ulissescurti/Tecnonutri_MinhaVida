@@ -1,4 +1,4 @@
-package br.com.soulskyye.tecnonutri.entity;
+package br.com.soulskyye.tecnonutri.model;
 
 import android.util.SparseArray;
 
