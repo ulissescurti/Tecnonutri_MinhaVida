@@ -31,6 +31,8 @@ public class FeedActivity extends BaseActivity implements FeedView {
         setContentView(R.layout.activity_feed);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         context = this;
 

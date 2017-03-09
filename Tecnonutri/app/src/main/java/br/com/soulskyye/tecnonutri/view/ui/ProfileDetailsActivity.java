@@ -34,6 +34,8 @@ public class ProfileDetailsActivity extends AppCompatActivity implements Profile
         setContentView(R.layout.activity_profile_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_profile_details);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         context = this;
 

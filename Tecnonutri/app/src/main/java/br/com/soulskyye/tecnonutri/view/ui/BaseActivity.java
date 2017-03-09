@@ -8,6 +8,8 @@ import com.mopub.mobileads.MoPubErrorCode;
 import com.mopub.mobileads.MoPubInterstitial;
 import com.mopub.mobileads.MoPubView;
 
+import br.com.soulskyye.tecnonutri.R;
+
 /**
  * Created by ulissescurti on 3/8/17.
  */

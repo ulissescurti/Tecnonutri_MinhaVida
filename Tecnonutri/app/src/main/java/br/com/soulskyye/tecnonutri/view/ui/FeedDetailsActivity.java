@@ -36,6 +36,8 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         setContentView(R.layout.activity_feed_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_details);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(R.mipmap.ic_launcher);
 
         context = this;
 
