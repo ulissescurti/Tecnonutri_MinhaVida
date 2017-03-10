@@ -22,6 +22,8 @@ import br.com.soulskyye.tecnonutri.backend.BackendManager;
 import br.com.soulskyye.tecnonutri.model.Item;
 import br.com.soulskyye.tecnonutri.model.Profile;
 import br.com.soulskyye.tecnonutri.util.Utils;
+import io.realm.Realm;
+import io.realm.RealmResults;
 import retrofit2.Callback;
 
 /**
@@ -33,6 +35,7 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
     public ArrayList<Item> listItems;
     Context context;
     Callback paginationCallback;
+    Realm realm;
 
     public int p;
     public int t;
@@ -41,6 +44,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
         this.listItems = listItems;
         this.context = context;
         this.paginationCallback = paginationCallback;
+        Realm.init(context);
+        this.realm = Realm.getDefaultInstance();
     }
 
     @Override
@@ -102,14 +107,31 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
             }
         });
 
+        realm.beginTransaction();
+        if(realm.where(Item.class).equalTo("id",item.getId()).findFirst() != null){
+            item.setLiked(true);
+            holder.heartCb.setChecked(true);
+        } else{
+            item.setLiked(false);
+            holder.heartCb.setChecked(false);
+        }
+        realm.commitTransaction();
         holder.heartCb.setChecked(item.isLiked());
         holder.heartCb.setTag(item);
         holder.heartCb.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 CheckBox cb = (CheckBox) v;
                 Item item = (Item) cb.getTag();
-
                 item.setLiked(cb.isChecked());
+
+                realm.beginTransaction();
+                if(item.isLiked()) {
+                    realm.copyToRealm(item);
+                } else{
+                    realm.where(Item.class).equalTo("id",item.getId()).findAll().deleteAllFromRealm();
+                }
+                realm.commitTransaction();
+
             }
         });
 

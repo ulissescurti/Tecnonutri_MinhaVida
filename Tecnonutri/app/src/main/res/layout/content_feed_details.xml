@@ -98,6 +98,7 @@
                         android:layout_marginRight="32dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
+                        android:visibility="gone"
                         android:layout_below="@id/feed_item_detail_second_layout"/>
 
                     <LinearLayout

@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,6 +78,18 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         TextView authorGoalTv = (TextView) findViewById(R.id.feed_item_detail_goal_tv);
         ImageView mealPhotoIv = (ImageView) findViewById(R.id.feed_item_detail_meal_iv);
         LinearLayout itemsList = (LinearLayout) findViewById(R.id.feed_item_detail_food_list);
+        final CheckBox likeCheckBox = (CheckBox) findViewById(R.id.feed_item_detail_meal_heart_cb);
+
+        likeCheckBox.setTag(item);
+        if(item.isLiked()){
+            likeCheckBox.setChecked(true);
+        }
+        likeCheckBox.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                CheckBox cb = (CheckBox) v;
+                mFeedDetailsPresenter.changeLikeState(cb.isChecked());
+            }
+        });
 
         if(isFromRefresh){
             hideRefreshDialog();
@@ -105,7 +118,17 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
                 .load(item.getImage())
                 .placeholder(R.drawable.meal_placeholder)
                 .error(R.drawable.ic_image_not_found)
-                .into(mealPhotoIv);
+                .into(mealPhotoIv, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        likeCheckBox.setVisibility(View.VISIBLE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        likeCheckBox.setVisibility(View.GONE);
+                    }
+                });
 
         authorNameTv.setText(item.getProfile().getName());
         authorGoalTv.setText(item.getProfile().getGoal());

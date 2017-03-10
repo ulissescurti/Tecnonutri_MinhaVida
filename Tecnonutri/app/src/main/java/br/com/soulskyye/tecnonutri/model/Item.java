@@ -7,11 +7,14 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
+import io.realm.RealmObject;
+import io.realm.annotations.Ignore;
+
 /**
  * Created by ulissescurti on 3/6/17.
  */
 
-public class Item {
+public class Item extends RealmObject {
 
     public Item(){
         super();
@@ -29,28 +32,40 @@ public class Item {
     private String feedHash;
     @SerializedName("id")
     private long id;
+
     @SerializedName("profile")
+    @Ignore
     Profile profile;
     @SerializedName("meal")
+    @Ignore
     private int meal;
     @SerializedName("date")
+    @Ignore
     private String date;
     @SerializedName("image")
+    @Ignore
     private String image;
     @SerializedName("energy")
+    @Ignore
     private float energy;
     @SerializedName("carbohydrate")
+    @Ignore
     private float carbohydrate;
     @SerializedName("fat")
+    @Ignore
     private float fat;
     @SerializedName("protein")
+    @Ignore
     private float protein;
     @SerializedName("foods")
+    @Ignore
     private ArrayList<Food> foods;
 
     @Expose
+    @Ignore
     private SparseArray<String> mealMap = new SparseArray<>();
     @Expose
+    @Ignore
     private boolean liked = false;
 
     public String getMealName(){
