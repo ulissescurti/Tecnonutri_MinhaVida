@@ -31,8 +31,8 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
     Callback paginationCallback;
     long id;
 
-    public int p;
-    public int t;
+    public int p, t;
+    public boolean loadFinished = false;
 
     public ProfileItemsListAdapter(long id, ArrayList<Item> listItems, Context context, Callback paginationCallback) {
         this.id = id;
@@ -74,9 +74,9 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
 
         Item[] item = adapterListItems.get(position);
 
-        if(holder.getAdapterPosition() == adapterListItems.size()-1){
+        if(holder.getAdapterPosition() == adapterListItems.size()-1 && !loadFinished){
             Utils.showProgressDialog(context);
-            BackendManager.getInstance().getPaginatedProfile(id, p, t, paginationCallback);
+            BackendManager.getInstance().getPaginatedProfile(id, p+1, t, paginationCallback);
         }
 
         for(int i=0; i<3; i++){

@@ -37,8 +37,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
     Callback paginationCallback;
     Realm realm;
 
-    public int p;
-    public int t;
+    public int p, t;
+    public boolean loadFinished = false;
 
     public FeedListAdapter(ArrayList<Item> listItems, Context context, Callback paginationCallback) {
         this.listItems = listItems;
@@ -79,10 +79,11 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
         holder.kcalTv.setText(Utils.getFormattedNumber(item.getEnergy())+" kcal");
         //animate(holder);
 
-        if(holder.getAdapterPosition() == listItems.size()-1){
+        if(holder.getAdapterPosition() == listItems.size()-1 && !loadFinished){
             Utils.showProgressDialog(context);
-            BackendManager.getInstance().getPaginatedFeed(p, t, paginationCallback);
+            BackendManager.getInstance().getPaginatedFeed(p+1, t, paginationCallback);
         }
+
         holder.mealPhotoIv.setTag(item);
         holder.mealPhotoIv.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -40,7 +40,7 @@ public class FeedPresenter implements BasePresenter<FeedView> {
                 if (isFromRefresh){
                     mFeedView.hideRefreshDialog();
                 }
-                loadItemRecyclerView(response.body().getP(), response.body().getT());
+                loadItemRecyclerView(false, response.body().getP(), response.body().getT());
                 mFeedView.hideProgressDialog();
             }
 
@@ -58,8 +58,11 @@ public class FeedPresenter implements BasePresenter<FeedView> {
 
                 items.addAll(response.body().getItems());
                 feedAdapter.insertItems(response.body().getItems().size());
-
-                loadItemRecyclerView(response.body().getP(), response.body().getT());
+                if(response.body().getItems() == null || response.body().getItems().size() == 0){
+                    loadItemRecyclerView(true, response.body().getP(), response.body().getT());
+                } else{
+                    loadItemRecyclerView(false, response.body().getP(), response.body().getT());
+                }
                 mFeedView.hideProgressDialog();
             }
 
@@ -70,9 +73,10 @@ public class FeedPresenter implements BasePresenter<FeedView> {
         };
     }
 
-    private void loadItemRecyclerView(int p, int t){
+    private void loadItemRecyclerView(boolean paginationEnded, int p, int t){
 
         feedAdapter = new FeedListAdapter(items, context, getPaginationFeedCallback());
+        feedAdapter.loadFinished = paginationEnded;
         mFeedView.setAdapter(feedAdapter);
         feedAdapter.p = p;
         feedAdapter.t = t;

@@ -55,9 +55,10 @@ public class ProfileDetailsPresenter implements BasePresenter<ProfileDetailsView
         });
     }
 
-    public void loadItemRecyclerView(int p, int t){
+    public void loadItemRecyclerView(boolean paginationEnded, int p, int t){
 
         profileAdapter = new ProfileItemsListAdapter(profileId, items, context, getPaginationFeedCallback());
+        profileAdapter.loadFinished = paginationEnded;
         mProfileView.setAdapter(profileAdapter);
         profileAdapter.p = p;
         profileAdapter.t = t;
@@ -70,8 +71,11 @@ public class ProfileDetailsPresenter implements BasePresenter<ProfileDetailsView
 
                 items.addAll(response.body().getItems());
                 profileAdapter.insertItems(response.body().getItems().size());
-
-                loadItemRecyclerView(response.body().getP(), response.body().getT());
+                if(response.body().getItems() == null || response.body().getItems().size() == 0){
+                    loadItemRecyclerView(true, response.body().getP(), response.body().getT());
+                } else{
+                    loadItemRecyclerView(false, response.body().getP(), response.body().getT());
+                }
                 Utils.hideProgressDialog();
             }
 

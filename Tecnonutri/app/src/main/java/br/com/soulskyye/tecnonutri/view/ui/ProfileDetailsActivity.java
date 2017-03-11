@@ -91,7 +91,7 @@ public class ProfileDetailsActivity extends BaseActivity implements ProfileDetai
         profileNameTv.setText(profile.getName());
         profileGoalTv.setText(profile.getGoal());
 
-        mProfileDetailsPresenter.loadItemRecyclerView(p, t);
+        mProfileDetailsPresenter.loadItemRecyclerView(false, p, t);
 
     }
 
