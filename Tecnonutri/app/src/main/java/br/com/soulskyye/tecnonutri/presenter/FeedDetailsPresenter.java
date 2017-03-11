@@ -21,6 +21,7 @@ public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView> {
     private Context context;
 
     private String feedHash;
+    private boolean isFromProfile;
     private Item item;
 
     private Realm realm;
@@ -88,6 +89,14 @@ public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView> {
 
     public void setFeedHash(String feedHash) {
         this.feedHash = feedHash;
+    }
+
+    public boolean isFromProfile() {
+        return isFromProfile;
+    }
+
+    public void setFromProfile(boolean isFromProfile) {
+        this.isFromProfile = isFromProfile;
     }
 
     public Item getItem() {

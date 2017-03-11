@@ -25,6 +25,7 @@ import br.com.soulskyye.tecnonutri.view.FeedDetailsView;
 public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView {
 
     public static final String FEED_HASH = "feedhash";
+    public static final String FROM_PROFILE = "fromprofile";
     private FeedDetailsPresenter mFeedDetailsPresenter;
 
     private Context context;
@@ -48,6 +49,7 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             mFeedDetailsPresenter.setFeedHash(extras.getString(FEED_HASH));
+            mFeedDetailsPresenter.setFromProfile(extras.getBoolean(FROM_PROFILE));
         }
 
         showInterstitialAd();
@@ -102,10 +104,14 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         profileLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Profile profile = item.getProfile();
-                Intent intent = new Intent(context, ProfileDetailsActivity.class);
-                intent.putExtra(ProfileDetailsActivity.PROFILE_ID, profile.getId());
-                startActivity(intent);
+                if(mFeedDetailsPresenter.isFromProfile()){
+                    onBackPressed();
+                } else {
+                    Profile profile = item.getProfile();
+                    Intent intent = new Intent(context, ProfileDetailsActivity.class);
+                    intent.putExtra(ProfileDetailsActivity.PROFILE_ID, profile.getId());
+                    startActivity(intent);
+                }
             }
         });
 

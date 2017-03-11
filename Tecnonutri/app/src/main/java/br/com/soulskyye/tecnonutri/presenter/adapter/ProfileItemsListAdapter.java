@@ -91,10 +91,7 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
                 holder.mealPhotoIv1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Item item = (Item) v.getTag();
-                        Intent intent = new Intent(context, FeedDetailsActivity.class);
-                        intent.putExtra(FeedDetailsActivity.FEED_HASH, item.getFeedHash());
-                        context.startActivity(intent);
+                        startFeedDetailsActivity((Item) v.getTag());
 
                     }
                 });
@@ -112,10 +109,7 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
                 holder.mealPhotoIv2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Item item = (Item) v.getTag();
-                        Intent intent = new Intent(context, FeedDetailsActivity.class);
-                        intent.putExtra(FeedDetailsActivity.FEED_HASH, item.getFeedHash());
-                        context.startActivity(intent);
+                        startFeedDetailsActivity((Item) v.getTag());
 
                     }
                 });
@@ -133,10 +127,7 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
                 holder.mealPhotoIv3.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Item item = (Item) v.getTag();
-                        Intent intent = new Intent(context, FeedDetailsActivity.class);
-                        intent.putExtra(FeedDetailsActivity.FEED_HASH, item.getFeedHash());
-                        context.startActivity(intent);
+                        startFeedDetailsActivity((Item) v.getTag());
 
                     }
                 });
@@ -146,6 +137,13 @@ public class ProfileItemsListAdapter extends RecyclerView.Adapter<ProfileItemsLi
         }
 
 
+    }
+
+    private void startFeedDetailsActivity(Item item){
+        Intent intent = new Intent(context, FeedDetailsActivity.class);
+        intent.putExtra(FeedDetailsActivity.FEED_HASH, item.getFeedHash());
+        intent.putExtra(FeedDetailsActivity.FROM_PROFILE, true);
+        context.startActivity(intent);
     }
 
     @Override
