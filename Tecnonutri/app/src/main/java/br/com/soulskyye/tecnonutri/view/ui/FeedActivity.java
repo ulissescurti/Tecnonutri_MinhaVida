@@ -20,10 +20,12 @@ public class FeedActivity extends BaseActivity implements FeedView {
     private FeedPresenter mFeedPresenter;
 
     private RecyclerView feedRecyclerView;
+    private LinearLayoutManager llm;
     private SwipeRefreshLayout swipeRefreshFeeds;
     private Context context;
 
     private MoPubView moPubView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class FeedActivity extends BaseActivity implements FeedView {
         moPubView.loadAd();
 
         feedRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_feed);
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm = new LinearLayoutManager(this);
         llm.setOrientation(LinearLayoutManager.VERTICAL);
         feedRecyclerView.setLayoutManager(llm);
 
@@ -100,5 +102,11 @@ public class FeedActivity extends BaseActivity implements FeedView {
     @Override
     public void setAdapter(FeedListAdapter adapter) {
         feedRecyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        mFeedPresenter.reloadItems();
     }
 }

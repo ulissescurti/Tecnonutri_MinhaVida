@@ -87,4 +87,8 @@ public class FeedPresenter implements BasePresenter<FeedView> {
     public void detachView() {
         mFeedView = null;
     }
+
+    public void reloadItems(){
+        if(feedAdapter != null) feedAdapter.notifyDataSetChanged();
+    }
 }
