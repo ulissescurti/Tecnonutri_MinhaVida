@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import java.util.Locale;
 
@@ -17,6 +19,9 @@ import retrofit2.Call;
 public class Utils {
 
     private static ProgressDialog progressDialog;
+
+    public static final int NETWORK_STATUS_NOT_CONNECTED = 0;
+    private static final int NETWORK_STATUS_WIFI = 1, NETWORK_STATUS_MOBILE = 2;
 
     public static String getFormattedDate(String date){// yyyy-MM-dd
         String[] splittedDate = date.split("-");
@@ -61,6 +66,21 @@ public class Utils {
         } else{
             return formattedNumber.replace(",", ".");
         }
+    }
+
+    public static int getConnectivityStatus(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context
+                .CONNECTIVITY_SERVICE);
+
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (null != activeNetwork) {
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI)
+                return NETWORK_STATUS_WIFI;
+
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE)
+                return NETWORK_STATUS_MOBILE;
+        }
+        return NETWORK_STATUS_NOT_CONNECTED;
     }
 
 }

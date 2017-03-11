@@ -12,5 +12,6 @@
     <string name="kcal">Kcal</string>
     <string name="g">g</string>
     <string name="measure_text">%1$s%2$s</string>
+    <string name="not_connected_message">Please, connect to the internet.</string>
 
 </resources>

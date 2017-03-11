@@ -12,5 +12,6 @@
     <string name="total_consumed">Total Consumido</string>
     <string name="kcal">Kcal</string>
     <string name="g">g</string>
+    <string name="not_connected_message">Por favor, se conecte à internet.</string>
 
 </resources>

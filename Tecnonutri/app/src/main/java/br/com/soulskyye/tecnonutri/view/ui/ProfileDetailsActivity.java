@@ -19,7 +19,7 @@ import br.com.soulskyye.tecnonutri.model.Profile;
 import br.com.soulskyye.tecnonutri.util.Utils;
 import br.com.soulskyye.tecnonutri.view.ProfileDetailsView;
 
-public class ProfileDetailsActivity extends AppCompatActivity implements ProfileDetailsView{
+public class ProfileDetailsActivity extends BaseActivity implements ProfileDetailsView{
 
     private ProfileDetailsPresenter mProfileDetailsPresenter;
 
