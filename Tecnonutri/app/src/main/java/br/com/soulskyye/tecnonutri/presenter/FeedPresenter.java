@@ -1,6 +1,9 @@
 package br.com.soulskyye.tecnonutri.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import java.util.ArrayList;
 
@@ -17,7 +20,7 @@ import retrofit2.Response;
  * Created by ulissescurti on 3/8/17.
  */
 
-public class FeedPresenter implements BasePresenter<FeedView> {
+public class FeedPresenter implements BasePresenter<FeedView>, AnalyticsLogger {
 
     private FeedView mFeedView;
     private ArrayList<Item> items;
@@ -75,7 +78,7 @@ public class FeedPresenter implements BasePresenter<FeedView> {
 
     private void loadItemRecyclerView(boolean paginationEnded, int p, int t){
 
-        feedAdapter = new FeedListAdapter(items, context, getPaginationFeedCallback());
+        feedAdapter = new FeedListAdapter(items, context, getPaginationFeedCallback(), this);
         feedAdapter.loadFinished = paginationEnded;
         mFeedView.setAdapter(feedAdapter);
         feedAdapter.p = p;
@@ -94,5 +97,15 @@ public class FeedPresenter implements BasePresenter<FeedView> {
 
     public void reloadItems(){
         if(feedAdapter != null) feedAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void logItemLikeChanged(Item item, boolean isLiked) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(FirebaseAnalytics.Param.ITEM_ID, item.getId());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getMealName());
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.getImage());
+        bundle.putBoolean("liked", isLiked);
+        FirebaseAnalytics.getInstance(context).logEvent("meal_likes", bundle);
     }
 }

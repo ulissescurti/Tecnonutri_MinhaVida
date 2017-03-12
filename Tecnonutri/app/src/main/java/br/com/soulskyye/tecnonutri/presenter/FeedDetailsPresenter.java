@@ -1,6 +1,9 @@
 package br.com.soulskyye.tecnonutri.presenter;
 
 import android.content.Context;
+import android.os.Bundle;
+
+import com.google.firebase.analytics.FirebaseAnalytics;
 
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
 import br.com.soulskyye.tecnonutri.backend.networkmodel.FeedItemResponse;
@@ -15,7 +18,7 @@ import retrofit2.Response;
  * Created by ulissescurti on 3/8/17.
  */
 
-public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView> {
+public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView>, AnalyticsLogger {
 
     private FeedDetailsView mFeedDetailsView;
     private Context context;
@@ -101,5 +104,15 @@ public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView> {
 
     public Item getItem() {
         return item;
+    }
+
+    @Override
+    public void logItemLikeChanged(Item item, boolean isLiked) {
+        Bundle bundle = new Bundle();
+        bundle.putLong(FirebaseAnalytics.Param.ITEM_ID, item.getId());
+        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getMealName());
+        bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.getImage());
+        bundle.putBoolean("liked", isLiked);
+        FirebaseAnalytics.getInstance(context).logEvent("meal_likes", bundle);
     }
 }

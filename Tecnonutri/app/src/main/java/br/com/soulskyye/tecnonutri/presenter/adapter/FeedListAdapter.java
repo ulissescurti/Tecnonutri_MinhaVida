@@ -2,6 +2,7 @@ package br.com.soulskyye.tecnonutri.presenter.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import br.com.soulskyye.tecnonutri.R;
+import br.com.soulskyye.tecnonutri.presenter.FeedPresenter;
 import br.com.soulskyye.tecnonutri.view.ui.FeedDetailsActivity;
 import br.com.soulskyye.tecnonutri.view.ui.ProfileDetailsActivity;
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
@@ -36,16 +39,18 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
     Context context;
     Callback paginationCallback;
     Realm realm;
+    FeedPresenter feedPresenter;
 
     public int p, t;
     public boolean loadFinished = false;
 
-    public FeedListAdapter(ArrayList<Item> listItems, Context context, Callback paginationCallback) {
+    public FeedListAdapter(ArrayList<Item> listItems, Context context, Callback paginationCallback, FeedPresenter feedPresenter) {
         this.listItems = listItems;
         this.context = context;
         this.paginationCallback = paginationCallback;
         Realm.init(context);
         this.realm = Realm.getDefaultInstance();
+        this.feedPresenter = feedPresenter;
     }
 
     @Override
@@ -132,6 +137,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
                     realm.where(Item.class).equalTo("id",item.getId()).findAll().deleteAllFromRealm();
                 }
                 realm.commitTransaction();
+
+                feedPresenter.logItemLikeChanged(item, item.isLiked());
 
             }
         });

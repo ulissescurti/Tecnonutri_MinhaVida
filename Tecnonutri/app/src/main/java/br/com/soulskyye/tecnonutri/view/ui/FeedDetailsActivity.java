@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
 import com.squareup.picasso.Picasso;
 
 import br.com.soulskyye.tecnonutri.R;
@@ -89,7 +90,9 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
         likeCheckBox.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 CheckBox cb = (CheckBox) v;
+
                 mFeedDetailsPresenter.changeLikeState(cb.isChecked());
+                mFeedDetailsPresenter.logItemLikeChanged(item, cb.isChecked());
             }
         });
 

@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "454672139355",
+    "firebase_url": "https://tecnonutri-43b9a.firebaseio.com",
+    "project_id": "tecnonutri-43b9a",
+    "storage_bucket": "tecnonutri-43b9a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454672139355:android:ba1d49feb0ac8d32",
+        "android_client_info": {
+          "package_name": "frio.br.com.soulskyye.tecnonutri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454672139355-pqlj1dnj48h8aphetkfcjvcfbi3cl2su.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVn2jPYQVSCMikEuFTyOBTVjhCzNLZEy4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:454672139355:android:8eea42d81ed6d839",
+        "android_client_info": {
+          "package_name": "calor.br.com.soulskyye.tecnonutri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "454672139355-pqlj1dnj48h8aphetkfcjvcfbi3cl2su.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVn2jPYQVSCMikEuFTyOBTVjhCzNLZEy4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
