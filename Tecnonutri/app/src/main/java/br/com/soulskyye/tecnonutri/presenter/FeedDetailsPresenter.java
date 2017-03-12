@@ -3,6 +3,8 @@ package br.com.soulskyye.tecnonutri.presenter;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.crashlytics.android.answers.Answers;
+import com.crashlytics.android.answers.CustomEvent;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import br.com.soulskyye.tecnonutri.backend.BackendManager;
@@ -18,7 +20,7 @@ import retrofit2.Response;
  * Created by ulissescurti on 3/8/17.
  */
 
-public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView>, AnalyticsLogger {
+public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView>, Logger {
 
     private FeedDetailsView mFeedDetailsView;
     private Context context;
@@ -107,12 +109,21 @@ public class FeedDetailsPresenter implements BasePresenter<FeedDetailsView>, Ana
     }
 
     @Override
-    public void logItemLikeChanged(Item item, boolean isLiked) {
+    public void logAnalyticsItemLikeChanged(Item item, boolean isLiked) {
         Bundle bundle = new Bundle();
         bundle.putLong(FirebaseAnalytics.Param.ITEM_ID, item.getId());
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, item.getMealName());
         bundle.putString(FirebaseAnalytics.Param.CONTENT_TYPE, item.getImage());
         bundle.putBoolean("liked", isLiked);
         FirebaseAnalytics.getInstance(context).logEvent("meal_likes", bundle);
+    }
+
+    @Override
+    public void logAnswersItemLikeChanged(Item item, boolean isLiked) {
+        Answers.getInstance().logCustom(new CustomEvent("Meal Likes")
+                .putCustomAttribute("Liked", isLiked ? 1 : 0)
+                .putCustomAttribute("Item Id", item.getId())
+                .putCustomAttribute("Item Name", item.getMealName())
+                .putCustomAttribute("Item Image", item.getImage()));
     }
 }

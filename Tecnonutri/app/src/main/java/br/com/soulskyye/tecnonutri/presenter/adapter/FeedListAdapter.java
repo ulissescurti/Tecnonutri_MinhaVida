@@ -138,7 +138,8 @@ public class FeedListAdapter extends RecyclerView.Adapter<FeedListAdapter.FeedVi
                 }
                 realm.commitTransaction();
 
-                feedPresenter.logItemLikeChanged(item, item.isLiked());
+                feedPresenter.logAnalyticsItemLikeChanged(item, item.isLiked());
+                feedPresenter.logAnswersItemLikeChanged(item, item.isLiked());
 
             }
         });

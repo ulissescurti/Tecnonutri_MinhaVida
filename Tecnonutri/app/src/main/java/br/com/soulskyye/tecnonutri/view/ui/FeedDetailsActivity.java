@@ -92,7 +92,9 @@ public class FeedDetailsActivity extends BaseActivity implements FeedDetailsView
                 CheckBox cb = (CheckBox) v;
 
                 mFeedDetailsPresenter.changeLikeState(cb.isChecked());
-                mFeedDetailsPresenter.logItemLikeChanged(item, cb.isChecked());
+                mFeedDetailsPresenter.logAnalyticsItemLikeChanged(item, cb.isChecked());
+                mFeedDetailsPresenter.logAnswersItemLikeChanged(item, cb.isChecked());
+
             }
         });
 

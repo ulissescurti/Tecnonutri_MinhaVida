@@ -1,6 +1,10 @@
 package br.com.soulskyye.tecnonutri;
 
 import android.app.Application;
+import com.crashlytics.android.Crashlytics;
+
+import br.com.soulskyye.tecnonutri.model.Item;
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by ulissescurti on 3/6/17.
@@ -19,6 +23,7 @@ public class TecnonutriApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fabric.with(this, new Crashlytics());
         sInstance = this;
 
 //        sInstance.initializeInstance();
